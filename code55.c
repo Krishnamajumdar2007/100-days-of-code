@@ -1,20 +1,44 @@
-//Q55 (Nested Loops without Arrays/Strings)
 #include <stdio.h>
+#include <stdlib.h>
+
+struct Node {
+    int data;
+    struct Node* next;
+};
+
 int main() {
-    int n;
+    int n, i, value;
+    struct Node *head = NULL, *temp = NULL, *last = NULL;
+
     scanf("%d", &n);
-    for (int i = 2; i <= n; i++) { 
-        int isPrime = 1;
-        for (int j = 2; j*j <= i; j++) { 
-            if (i % j == 0) {
-                isPrime = 0;
-                break;
-            }
-        }
-        if (isPrime) {
-            printf("%d ", i);
+
+    if (n <= 0) {
+        return 0;
+    }
+
+    for (i = 0; i < n; i++) {
+        scanf("%d", &value);
+
+        temp = (struct Node*)malloc(sizeof(struct Node));
+        temp->data = value;
+        temp->next = NULL;
+
+        if (head == NULL) {
+            head = temp;
+            last = temp;
+        } else {
+            last->next = temp;
+            last = temp;
         }
     }
-    printf("\n");
+
+    last->next = head;
+
+    temp = head;
+    do {
+        printf("%d ", temp->data);
+        temp = temp->next;
+    } while (temp != head);
+
     return 0;
 }
